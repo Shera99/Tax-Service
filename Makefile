@@ -17,7 +17,7 @@ help:
 
 # Build containers
 build:
-	docker compose build --no-cache app
+	docker compose build
 
 # Start containers
 up:

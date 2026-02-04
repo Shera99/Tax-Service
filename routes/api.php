@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\V1\AuthController;
+use App\Http\Controllers\Api\V1\ExternalStatisticController;
 use App\Http\Controllers\Api\V1\StatisticController;
 use Illuminate\Support\Facades\Route;
 
@@ -20,13 +21,18 @@ Route::prefix('v1')->group(function () {
     // Public routes
     Route::post('/login', [AuthController::class, 'login']);
 
-    // Protected routes (require authentication)
+    // External API routes (API key authentication via HMAC signature)
+    Route::middleware('api.key')->group(function () {
+        Route::post('/external/statistics', [ExternalStatisticController::class, 'store']);
+    });
+
+    // Protected routes (require user authentication)
     Route::middleware('auth:sanctum')->group(function () {
         // Auth
         Route::post('/logout', [AuthController::class, 'logout']);
         Route::get('/user', [AuthController::class, 'user']);
 
-        // Statistics CRUD
+        // Statistics CRUD (for admin panel)
         Route::apiResource('statistics', StatisticController::class);
     });
 });

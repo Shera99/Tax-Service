@@ -35,9 +35,10 @@ class StatisticModel extends Model
     public function scopeSearch($query, ?string $search)
     {
         if ($search) {
+            $search = mb_strtolower($search);
             return $query->where(function ($q) use ($search) {
-                $q->where('event_name', 'ilike', "%{$search}%")
-                    ->orWhere('organization_name', 'ilike', "%{$search}%");
+                $q->whereRaw('LOWER(event_name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(organization_name) LIKE ?', ["%{$search}%"]);
             });
         }
         return $query;

@@ -58,6 +58,12 @@ docker compose exec app php artisan migrate --seed
 - Удаление пользователей
 - Назначение ролей
 
+### Управление API ключами (только admin)
+- Создание API ключей для внешних сервисов
+- Активация/деактивация ключей
+- Просмотр статистики использования
+- Документация по интеграции
+
 ## Архитектура проекта
 
 Проект использует Clean Architecture с разделением на слои:
@@ -92,7 +98,13 @@ src/
 | POST | `/api/v1/logout` | Выход (требует токен) |
 | GET | `/api/v1/user` | Получить текущего пользователя |
 
-### Статистика (требует авторизации)
+### Внешний API (для сервисов - HMAC авторизация)
+
+| Метод | Endpoint | Описание |
+|-------|----------|----------|
+| POST | `/api/v1/external/statistics` | Добавить статистику (HMAC) |
+
+### Статистика (требует авторизации по токену)
 
 | Метод | Endpoint | Описание |
 |-------|----------|----------|
@@ -144,6 +156,68 @@ curl -X GET "http://localhost:8080/api/v1/statistics?page=1&per_page=20" \
   -H "Authorization: Bearer YOUR_TOKEN"
 ```
 
+## Внешний API (HMAC авторизация)
+
+Для внешних сервисов используется авторизация по API ключам с HMAC подписью.
+
+### Тестовые ключи
+
+- **Public Key:** `pub_test_1234567890abcdef12345678`
+- **Secret Key:** `sec_test_abcdef1234567890abcdef12`
+
+### Формат Authorization заголовка
+
+```
+Authorization: HMAC {public_key}:{signature}:{timestamp}
+```
+
+### Создание подписи
+
+```php
+$timestamp = time();
+$payload = json_encode($data); // тело запроса
+$dataToSign = $timestamp . '.' . $payload;
+$signature = hash_hmac('sha256', $dataToSign, $secretKey);
+```
+
+### Пример запроса с HMAC
+
+```php
+<?php
+$publicKey = 'pub_test_1234567890abcdef12345678';
+$secretKey = 'sec_test_abcdef1234567890abcdef12';
+
+$data = [
+    'event_name' => 'Концерт',
+    'organization_name' => 'ТОО Организатор',
+    'date_time' => '2024-06-15 19:00:00',
+    'total_tickets_available' => 1000,
+    'total_amount_sold' => 150000.00,
+    'total_tickets_sold' => 750,
+    'free_tickets_count' => 200,
+    'invitation_tickets_count' => 50,
+    'refunded_tickets_count' => 10,
+];
+
+$timestamp = time();
+$payload = json_encode($data);
+$signature = hash_hmac('sha256', $timestamp . '.' . $payload, $secretKey);
+
+$ch = curl_init('http://localhost:8080/api/v1/external/statistics');
+curl_setopt($ch, CURLOPT_POST, true);
+curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+curl_setopt($ch, CURLOPT_HTTPHEADER, [
+    'Content-Type: application/json',
+    "Authorization: HMAC {$publicKey}:{$signature}:{$timestamp}",
+]);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+$response = curl_exec($ch);
+curl_close($ch);
+
+echo $response;
+```
+
 ## Структура таблицы Statistics
 
 | Поле | Тип | Описание |
@@ -178,7 +252,7 @@ make test       # Запуск тестов
 
 ## Структура Docker
 
-- **app** - PHP-FPM 8.3 контейнер
+- **app** - PHP-FPM 8.4 контейнер
 - **nginx** - Nginx веб-сервер (порт 8080)
 - **db** - PostgreSQL 15 (порт 5432)
 
@@ -194,7 +268,7 @@ make test       # Запуск тестов
 
 ## Технологии
 
-- **Backend:** Laravel 12, PHP 8.3
+- **Backend:** Laravel 12, PHP 8.4
 - **Database:** PostgreSQL 15
 - **Frontend:** Tailwind CSS (CDN), Alpine.js
 - **Auth API:** Laravel Sanctum

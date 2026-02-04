@@ -16,9 +16,10 @@ class UserController extends Controller
         $query = User::query();
 
         if ($search = $request->get('search')) {
+            $search = mb_strtolower($search);
             $query->where(function ($q) use ($search) {
-                $q->where('name', 'ilike', "%{$search}%")
-                    ->orWhere('email', 'ilike', "%{$search}%");
+                $q->whereRaw('LOWER(name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(email) LIKE ?', ["%{$search}%"]);
             });
         }
 

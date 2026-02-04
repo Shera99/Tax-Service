@@ -40,6 +40,12 @@
                         <i class="fas fa-users w-5 mr-3"></i>
                         <span>Пользователи</span>
                     </a>
+
+                    <a href="{{ route('api-keys.index') }}"
+                        class="flex items-center px-6 py-3 text-gray-300 hover:bg-slate-700 hover:text-white transition-colors {{ request()->routeIs('api-keys.*') ? 'bg-slate-700 text-white border-l-4 border-blue-500' : '' }}">
+                        <i class="fas fa-key w-5 mr-3"></i>
+                        <span>API Ключи</span>
+                    </a>
                 @endif
             </nav>
 

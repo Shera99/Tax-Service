@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Web\ApiKeyController;
 use App\Http\Controllers\Web\AuthController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\UserController;
@@ -23,8 +24,12 @@ Route::middleware('auth')->group(function () {
     // Dashboard - доступен всем авторизованным
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Управление пользователями - только для админа
+    // Управление пользователями и API ключами - только для админа
     Route::middleware('admin')->group(function () {
         Route::resource('users', UserController::class)->except(['show']);
+
+        // API Keys management
+        Route::resource('api-keys', ApiKeyController::class)->except(['edit', 'update']);
+        Route::post('api-keys/{apiKey}/toggle', [ApiKeyController::class, 'toggle'])->name('api-keys.toggle');
     });
 });
