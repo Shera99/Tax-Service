@@ -49,9 +49,9 @@ docker compose exec app php artisan migrate --seed
 ### Статистика (Dashboard)
 - Таблица со всеми записями статистики
 - Пагинация (20 записей на странице)
-- Поиск по названию мероприятия и организации
-- Фильтры по датам (от/до)
-- Сортировка по всем полям (дата, название, сумма, кол-во билетов)
+- Поиск по названию мероприятия, организации и площадки
+- Фильтры по датам мероприятия (от/до)
+- Сортировка по всем полям (дата мероприятия, дата создания, название, сумма, кол-во билетов)
 
 ### Управление пользователями (только admin)
 - Создание новых пользователей
@@ -139,6 +139,7 @@ curl -X POST http://localhost:8080/api/v1/statistics \
   -d '{
     "event_name": "Концерт группы XYZ",
     "organization_name": "ТОО Концерт",
+    "venue_name": "Дворец Республики",
     "date_time": "2024-06-15 19:00:00",
     "total_tickets_available": 1000,
     "total_amount_sold": 150000.00,
@@ -191,6 +192,7 @@ $secretKey = 'sec_test_abcdef1234567890abcdef12';
 $data = [
     'event_name' => 'Концерт',
     'organization_name' => 'ТОО Организатор',
+    'venue_name' => 'Дворец Республики', // опционально
     'date_time' => '2024-06-15 19:00:00',
     'total_tickets_available' => 1000,
     'total_amount_sold' => 150000.00,
@@ -226,6 +228,7 @@ echo $response;
 | id | bigint | ID записи |
 | event_name | varchar(255) | Название события |
 | organization_name | varchar(255) | Название организации |
+| venue_name | varchar(255) | Название площадки (опционально) |
 | date_time | datetime | Дата и время сессии |
 | total_tickets_available | int | Всего билетов под продажу |
 | total_amount_sold | decimal(12,2) | Сумма продаж |
@@ -267,11 +270,26 @@ make test       # Запуск тестов
 - Username: `tax_user`
 - Password: `secret`
 
+## Тестирование
+
+```bash
+# Запуск всех тестов
+make test
+
+# Или напрямую
+docker compose exec app php artisan test
+
+# Запуск конкретного теста
+docker compose exec app php artisan test --filter=ExternalStatisticApiTest
+```
+
 ## Технологии
 
 - **Backend:** Laravel 12, PHP 8.4
 - **Database:** PostgreSQL 15
 - **Frontend:** Tailwind CSS (CDN), Alpine.js
 - **Auth API:** Laravel Sanctum
+- **External API:** HMAC SHA-256 signature
+- **API Docs:** L5-Swagger (OpenAPI)
 - **Architecture:** Clean Architecture
 - **Containerization:** Docker, Docker Compose
