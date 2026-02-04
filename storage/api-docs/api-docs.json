@@ -1,0 +1,282 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Tax Service External API",
+        "description": "Внешний API для отправки статистики продаж билетов",
+        "contact": {
+            "name": "API Support",
+            "email": "support@taxservice.local"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api/v1",
+            "description": "API Server"
+        }
+    ],
+    "paths": {
+        "/external/statistics": {
+            "post": {
+                "tags": [
+                    "External"
+                ],
+                "summary": "Добавить статистику (внешний сервис)",
+                "description": "Создание записи статистики от внешнего сервиса с HMAC авторизацией",
+                "operationId": "3e45a0cce0599c04cbae903113e3cfdb",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateStatisticRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Статистика успешно создана",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": true
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Статистика успешно добавлена"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Statistic"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Ошибка авторизации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Неверная подпись запроса"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ошибка валидации",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "success": {
+                                            "type": "boolean",
+                                            "example": false
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ошибка валидации"
+                                        },
+                                        "errors": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "hmacAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Statistic": {
+                "title": "Statistic",
+                "description": "Модель статистики мероприятия",
+                "properties": {
+                    "id": {
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "event_name": {
+                        "type": "string",
+                        "example": "Концерт группы XYZ"
+                    },
+                    "organization_name": {
+                        "type": "string",
+                        "example": "ТОО Организатор"
+                    },
+                    "venue_name": {
+                        "description": "Название площадки",
+                        "type": "string",
+                        "example": "Дворец Республики",
+                        "nullable": true
+                    },
+                    "date_time": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-06-15 19:00:00"
+                    },
+                    "total_tickets_available": {
+                        "description": "Всего билетов под продажу",
+                        "type": "integer",
+                        "example": 1000
+                    },
+                    "total_amount_sold": {
+                        "description": "Сумма продаж",
+                        "type": "number",
+                        "format": "float",
+                        "example": 150000
+                    },
+                    "total_tickets_sold": {
+                        "description": "Кол-во проданных билетов",
+                        "type": "integer",
+                        "example": 750
+                    },
+                    "free_tickets_count": {
+                        "description": "Кол-во непроданных билетов",
+                        "type": "integer",
+                        "example": 200
+                    },
+                    "invitation_tickets_count": {
+                        "description": "Кол-во пригласительных билетов",
+                        "type": "integer",
+                        "example": 50
+                    },
+                    "refunded_tickets_count": {
+                        "description": "Кол-во возвращенных билетов",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "created_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-15 10:30:00"
+                    },
+                    "updated_at": {
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-01-15 10:30:00"
+                    }
+                },
+                "type": "object"
+            },
+            "CreateStatisticRequest": {
+                "title": "CreateStatisticRequest",
+                "description": "Запрос на создание статистики",
+                "required": [
+                    "event_name",
+                    "organization_name",
+                    "date_time",
+                    "total_tickets_available",
+                    "total_amount_sold",
+                    "total_tickets_sold",
+                    "free_tickets_count",
+                    "invitation_tickets_count",
+                    "refunded_tickets_count"
+                ],
+                "properties": {
+                    "event_name": {
+                        "description": "Название мероприятия",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Концерт группы XYZ"
+                    },
+                    "organization_name": {
+                        "description": "Название организации",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "ТОО Организатор"
+                    },
+                    "venue_name": {
+                        "description": "Название площадки (опционально)",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Дворец Республики",
+                        "nullable": true
+                    },
+                    "date_time": {
+                        "description": "Дата и время в формате Y-m-d H:i:s",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-06-15 19:00:00"
+                    },
+                    "total_tickets_available": {
+                        "description": "Всего билетов под продажу",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 1000
+                    },
+                    "total_amount_sold": {
+                        "description": "Сумма продаж",
+                        "type": "number",
+                        "format": "float",
+                        "minimum": 0,
+                        "example": 150000
+                    },
+                    "total_tickets_sold": {
+                        "description": "Кол-во проданных билетов",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 750
+                    },
+                    "free_tickets_count": {
+                        "description": "Кол-во непроданных билетов",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 200
+                    },
+                    "invitation_tickets_count": {
+                        "description": "Кол-во пригласительных билетов",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 50
+                    },
+                    "refunded_tickets_count": {
+                        "description": "Кол-во возвращенных билетов",
+                        "type": "integer",
+                        "minimum": 0,
+                        "example": 10
+                    }
+                },
+                "type": "object"
+            }
+        },
+        "securitySchemes": {
+            "hmacAuth": {
+                "type": "apiKey",
+                "description": "HMAC авторизация. Формат: HMAC {public_key}:{signature}:{timestamp}",
+                "name": "Authorization",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "External",
+            "description": "API для внешних сервисов (HMAC авторизация)"
+        }
+    ]
+}

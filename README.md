@@ -25,6 +25,7 @@ docker compose exec app php artisan migrate --seed
 После установки:
 - **Веб-интерфейс:** `http://localhost:8080`
 - **API:** `http://localhost:8080/api/v1`
+- **Swagger UI:** `http://localhost:8080/api/documentation`
 
 ## Учетные данные
 

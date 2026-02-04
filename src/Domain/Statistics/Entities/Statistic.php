@@ -12,6 +12,7 @@ final class Statistic
         private ?int $id,
         private string $eventName,
         private string $organizationName,
+        private ?string $venueName,
         private DateTimeImmutable $dateTime,
         private int $totalTicketsAvailable,
         private float $totalAmountSold,
@@ -37,6 +38,11 @@ final class Statistic
     public function getOrganizationName(): string
     {
         return $this->organizationName;
+    }
+
+    public function getVenueName(): ?string
+    {
+        return $this->venueName;
     }
 
     public function getDateTime(): DateTimeImmutable
@@ -90,6 +96,7 @@ final class Statistic
             'id' => $this->id,
             'event_name' => $this->eventName,
             'organization_name' => $this->organizationName,
+            'venue_name' => $this->venueName,
             'date_time' => $this->dateTime->format('Y-m-d H:i:s'),
             'total_tickets_available' => $this->totalTicketsAvailable,
             'total_amount_sold' => $this->totalAmountSold,

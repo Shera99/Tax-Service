@@ -11,6 +11,7 @@ final readonly class CreateStatisticDTO
     public function __construct(
         public string $eventName,
         public string $organizationName,
+        public ?string $venueName,
         public DateTimeImmutable $dateTime,
         public int $totalTicketsAvailable,
         public float $totalAmountSold,
@@ -26,6 +27,7 @@ final readonly class CreateStatisticDTO
         return new self(
             eventName: $data['event_name'],
             organizationName: $data['organization_name'],
+            venueName: $data['venue_name'] ?? null,
             dateTime: new DateTimeImmutable($data['date_time']),
             totalTicketsAvailable: (int) $data['total_tickets_available'],
             totalAmountSold: (float) $data['total_amount_sold'],

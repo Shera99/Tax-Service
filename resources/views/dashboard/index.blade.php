@@ -104,6 +104,8 @@
                             <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Организация</th>
                             <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
+                                Площадка</th>
+                            <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Дата/Время</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Доступно</th>
@@ -132,6 +134,11 @@
                                 <td class="px-4 py-3">
                                     <div class="text-sm text-gray-600 max-w-xs truncate" title="{{ $stat->organization_name }}">
                                         {{ $stat->organization_name }}
+                                    </div>
+                                </td>
+                                <td class="px-4 py-3">
+                                    <div class="text-sm text-gray-600 max-w-xs truncate" title="{{ $stat->venue_name }}">
+                                        {{ $stat->venue_name ?? '—' }}
                                     </div>
                                 </td>
                                 <td class="px-4 py-3 text-sm text-gray-600">
@@ -168,7 +175,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="10" class="px-4 py-12 text-center">
+                                <td colspan="11" class="px-4 py-12 text-center">
                                     <div class="text-gray-400">
                                         <i class="fas fa-inbox text-4xl mb-3"></i>
                                         <p>Данные не найдены</p>

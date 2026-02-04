@@ -13,6 +13,7 @@ class StatisticModel extends Model
     protected $fillable = [
         'event_name',
         'organization_name',
+        'venue_name',
         'date_time',
         'total_tickets_available',
         'total_amount_sold',
@@ -38,7 +39,8 @@ class StatisticModel extends Model
             $search = mb_strtolower($search);
             return $query->where(function ($q) use ($search) {
                 $q->whereRaw('LOWER(event_name) LIKE ?', ["%{$search}%"])
-                    ->orWhereRaw('LOWER(organization_name) LIKE ?', ["%{$search}%"]);
+                    ->orWhereRaw('LOWER(organization_name) LIKE ?', ["%{$search}%"])
+                    ->orWhereRaw('LOWER(venue_name) LIKE ?', ["%{$search}%"]);
             });
         }
         return $query;

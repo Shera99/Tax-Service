@@ -27,6 +27,7 @@ final class UpdateStatisticUseCase
             id: $dto->id,
             eventName: $dto->eventName,
             organizationName: $dto->organizationName,
+            venueName: $dto->venueName,
             dateTime: $dto->dateTime,
             totalTicketsAvailable: $dto->totalTicketsAvailable,
             totalAmountSold: $dto->totalAmountSold,

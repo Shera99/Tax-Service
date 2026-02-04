@@ -41,6 +41,7 @@ final class EloquentStatisticRepository implements StatisticRepositoryInterface
         $model = StatisticModel::create([
             'event_name' => $statistic->getEventName(),
             'organization_name' => $statistic->getOrganizationName(),
+            'venue_name' => $statistic->getVenueName(),
             'date_time' => $statistic->getDateTime()->format('Y-m-d H:i:s'),
             'total_tickets_available' => $statistic->getTotalTicketsAvailable(),
             'total_amount_sold' => $statistic->getTotalAmountSold(),
@@ -60,6 +61,7 @@ final class EloquentStatisticRepository implements StatisticRepositoryInterface
         $model->update([
             'event_name' => $statistic->getEventName(),
             'organization_name' => $statistic->getOrganizationName(),
+            'venue_name' => $statistic->getVenueName(),
             'date_time' => $statistic->getDateTime()->format('Y-m-d H:i:s'),
             'total_tickets_available' => $statistic->getTotalTicketsAvailable(),
             'total_amount_sold' => $statistic->getTotalAmountSold(),
@@ -88,6 +90,7 @@ final class EloquentStatisticRepository implements StatisticRepositoryInterface
             id: $model->id,
             eventName: $model->event_name,
             organizationName: $model->organization_name,
+            venueName: $model->venue_name,
             dateTime: new DateTimeImmutable($model->date_time->format('Y-m-d H:i:s')),
             totalTicketsAvailable: $model->total_tickets_available,
             totalAmountSold: (float) $model->total_amount_sold,

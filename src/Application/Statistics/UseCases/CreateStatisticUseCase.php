@@ -21,6 +21,7 @@ final class CreateStatisticUseCase
             id: null,
             eventName: $dto->eventName,
             organizationName: $dto->organizationName,
+            venueName: $dto->venueName,
             dateTime: $dto->dateTime,
             totalTicketsAvailable: $dto->totalTicketsAvailable,
             totalAmountSold: $dto->totalAmountSold,

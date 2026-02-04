@@ -24,6 +24,7 @@ class StoreStatisticRequest extends FormRequest
         return [
             'event_name' => ['required', 'string', 'max:255'],
             'organization_name' => ['required', 'string', 'max:255'],
+            'venue_name' => ['nullable', 'string', 'max:255'],
             'date_time' => ['required', 'date_format:Y-m-d H:i:s'],
             'total_tickets_available' => ['required', 'integer', 'min:0'],
             'total_amount_sold' => ['required', 'numeric', 'min:0'],
@@ -46,6 +47,7 @@ class StoreStatisticRequest extends FormRequest
             'event_name.max' => 'Название события не должно превышать 255 символов',
             'organization_name.required' => 'Название организации обязательно',
             'organization_name.max' => 'Название организации не должно превышать 255 символов',
+            'venue_name.max' => 'Название площадки не должно превышать 255 символов',
             'date_time.required' => 'Дата и время обязательны',
             'date_time.date_format' => 'Дата и время должны быть в формате Y-m-d H:i:s',
             'total_tickets_available.required' => 'Количество доступных билетов обязательно',
