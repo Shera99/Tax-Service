@@ -1,0 +1,54 @@
+version: "3.8"
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: docker/php/Dockerfile
+    container_name: tax-service-app
+    restart: unless-stopped
+    working_dir: /var/www
+    volumes:
+      - ./:/var/www
+      - ./docker/php/local.ini:/usr/local/etc/php/conf.d/local.ini
+    networks:
+      - tax-service-network
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx:alpine
+    container_name: tax-service-nginx
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    networks:
+      - tax-service-network
+    depends_on:
+      - app
+
+  db:
+    image: postgres:15-alpine
+    container_name: tax-service-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_DATABASE:-tax_service}
+      POSTGRES_USER: ${DB_USERNAME:-tax_user}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-secret}
+    ports:
+      - "5432:5432"
+    volumes:
+      - tax-service-db-data:/var/lib/postgresql/data
+    networks:
+      - tax-service-network
+
+networks:
+  tax-service-network:
+    driver: bridge
+
+volumes:
+  tax-service-db-data:
+    driver: local
