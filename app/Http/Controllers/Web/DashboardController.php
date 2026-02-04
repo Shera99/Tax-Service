@@ -33,6 +33,7 @@ class DashboardController extends Controller
 
         $allowedSortFields = [
             'date_time',
+            'created_at',
             'event_name',
             'organization_name',
             'total_tickets_available',

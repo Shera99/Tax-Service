@@ -26,7 +26,7 @@
                                 <i class="fas fa-search"></i>
                             </span>
                             <input type="text" name="search" value="{{ request('search') }}"
-                                placeholder="Мероприятие или организация..."
+                                placeholder="Мероприятие, организация, площадка..."
                                 class="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                         </div>
                     </div>
@@ -50,7 +50,10 @@
                         <label class="block text-sm font-medium text-gray-700 mb-1">Сортировка</label>
                         <select name="sort"
                             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
-                            <option value="date_time" {{ request('sort') == 'date_time' ? 'selected' : '' }}>По дате</option>
+                            <option value="date_time" {{ request('sort') == 'date_time' ? 'selected' : '' }}>По дате
+                                мероприятия</option>
+                            <option value="created_at" {{ request('sort') == 'created_at' ? 'selected' : '' }}>По дате
+                                создания</option>
                             <option value="event_name" {{ request('sort') == 'event_name' ? 'selected' : '' }}>По названию
                             </option>
                             <option value="organization_name" {{ request('sort') == 'organization_name' ? 'selected' : '' }}>
