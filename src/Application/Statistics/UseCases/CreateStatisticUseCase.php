@@ -19,6 +19,8 @@ final class CreateStatisticUseCase
     {
         $statistic = new Statistic(
             id: null,
+            eventId: $dto->eventId,
+            sessionId: $dto->sessionId,
             eventName: $dto->eventName,
             organizationName: $dto->organizationName,
             venueName: $dto->venueName,

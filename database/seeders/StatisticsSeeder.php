@@ -62,6 +62,8 @@ class StatisticsSeeder extends Seeder
             $pricePerTicket = rand(1000, 15000);
 
             StatisticModel::create([
+                'event_id' => rand(1, 1000),
+                'session_id' => rand(1, 5000),
                 'event_name' => $events[array_rand($events)] . ' #' . ($i + 1),
                 'organization_name' => $organizations[array_rand($organizations)],
                 'venue_name' => $venues[array_rand($venues)],

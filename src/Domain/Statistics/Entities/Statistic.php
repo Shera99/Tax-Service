@@ -10,6 +10,8 @@ final class Statistic
 {
     public function __construct(
         private ?int $id,
+        private ?int $eventId,
+        private ?int $sessionId,
         private string $eventName,
         private string $organizationName,
         private ?string $venueName,
@@ -28,6 +30,16 @@ final class Statistic
     public function getId(): ?int
     {
         return $this->id;
+    }
+
+    public function getEventId(): ?int
+    {
+        return $this->eventId;
+    }
+
+    public function getSessionId(): ?int
+    {
+        return $this->sessionId;
     }
 
     public function getEventName(): string
@@ -94,6 +106,8 @@ final class Statistic
     {
         return [
             'id' => $this->id,
+            'event_id' => $this->eventId,
+            'session_id' => $this->sessionId,
             'event_name' => $this->eventName,
             'organization_name' => $this->organizationName,
             'venue_name' => $this->venueName,

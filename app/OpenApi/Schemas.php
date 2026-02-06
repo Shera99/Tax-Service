@@ -10,6 +10,8 @@ use OpenApi\Attributes as OA;
     description: "Модель статистики мероприятия",
     properties: [
         new OA\Property(property: "id", type: "integer", example: 1),
+        new OA\Property(property: "event_id", type: "integer", nullable: true, example: 123, description: "ID события во внешней системе"),
+        new OA\Property(property: "session_id", type: "integer", nullable: true, example: 456, description: "ID сессии во внешней системе"),
         new OA\Property(property: "event_name", type: "string", example: "Концерт группы XYZ"),
         new OA\Property(property: "organization_name", type: "string", example: "ТОО Организатор"),
         new OA\Property(property: "venue_name", type: "string", nullable: true, example: "Дворец Республики", description: "Название площадки"),
@@ -40,6 +42,8 @@ use OpenApi\Attributes as OA;
         "refunded_tickets_count"
     ],
     properties: [
+        new OA\Property(property: "event_id", type: "integer", minimum: 1, nullable: true, example: 123, description: "ID события во внешней системе (опционально)"),
+        new OA\Property(property: "session_id", type: "integer", minimum: 1, nullable: true, example: 456, description: "ID сессии во внешней системе (опционально)"),
         new OA\Property(property: "event_name", type: "string", maxLength: 255, example: "Концерт группы XYZ", description: "Название мероприятия"),
         new OA\Property(property: "organization_name", type: "string", maxLength: 255, example: "ТОО Организатор", description: "Название организации"),
         new OA\Property(property: "venue_name", type: "string", maxLength: 255, nullable: true, example: "Дворец Республики", description: "Название площадки (опционально)"),

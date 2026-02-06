@@ -25,6 +25,8 @@ final class UpdateStatisticUseCase
 
         $statistic = new Statistic(
             id: $dto->id,
+            eventId: $dto->eventId,
+            sessionId: $dto->sessionId,
             eventName: $dto->eventName,
             organizationName: $dto->organizationName,
             venueName: $dto->venueName,

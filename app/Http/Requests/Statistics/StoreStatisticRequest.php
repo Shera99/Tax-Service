@@ -22,6 +22,8 @@ class StoreStatisticRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'event_id' => ['nullable', 'integer', 'min:1'],
+            'session_id' => ['nullable', 'integer', 'min:1'],
             'event_name' => ['required', 'string', 'max:255'],
             'organization_name' => ['required', 'string', 'max:255'],
             'venue_name' => ['nullable', 'string', 'max:255'],
@@ -43,6 +45,10 @@ class StoreStatisticRequest extends FormRequest
     public function messages(): array
     {
         return [
+            'event_id.integer' => 'ID события должно быть целым числом',
+            'event_id.min' => 'ID события должно быть положительным числом',
+            'session_id.integer' => 'ID сессии должно быть целым числом',
+            'session_id.min' => 'ID сессии должно быть положительным числом',
             'event_name.required' => 'Название события обязательно',
             'event_name.max' => 'Название события не должно превышать 255 символов',
             'organization_name.required' => 'Название организации обязательно',

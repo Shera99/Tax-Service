@@ -39,6 +39,8 @@ final class EloquentStatisticRepository implements StatisticRepositoryInterface
     public function save(Statistic $statistic): Statistic
     {
         $model = StatisticModel::create([
+            'event_id' => $statistic->getEventId(),
+            'session_id' => $statistic->getSessionId(),
             'event_name' => $statistic->getEventName(),
             'organization_name' => $statistic->getOrganizationName(),
             'venue_name' => $statistic->getVenueName(),
@@ -59,6 +61,8 @@ final class EloquentStatisticRepository implements StatisticRepositoryInterface
         $model = StatisticModel::findOrFail($statistic->getId());
 
         $model->update([
+            'event_id' => $statistic->getEventId(),
+            'session_id' => $statistic->getSessionId(),
             'event_name' => $statistic->getEventName(),
             'organization_name' => $statistic->getOrganizationName(),
             'venue_name' => $statistic->getVenueName(),
@@ -88,6 +92,8 @@ final class EloquentStatisticRepository implements StatisticRepositoryInterface
     {
         return new Statistic(
             id: $model->id,
+            eventId: $model->event_id,
+            sessionId: $model->session_id,
             eventName: $model->event_name,
             organizationName: $model->organization_name,
             venueName: $model->venue_name,

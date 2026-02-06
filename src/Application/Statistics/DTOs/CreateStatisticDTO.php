@@ -9,6 +9,8 @@ use DateTimeImmutable;
 final readonly class CreateStatisticDTO
 {
     public function __construct(
+        public ?int $eventId,
+        public ?int $sessionId,
         public string $eventName,
         public string $organizationName,
         public ?string $venueName,
@@ -25,6 +27,8 @@ final readonly class CreateStatisticDTO
     public static function fromArray(array $data): self
     {
         return new self(
+            eventId: isset($data['event_id']) ? (int) $data['event_id'] : null,
+            sessionId: isset($data['session_id']) ? (int) $data['session_id'] : null,
             eventName: $data['event_name'],
             organizationName: $data['organization_name'],
             venueName: $data['venue_name'] ?? null,

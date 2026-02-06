@@ -11,6 +11,8 @@ class StatisticModel extends Model
     protected $table = 'statistics';
 
     protected $fillable = [
+        'event_id',
+        'session_id',
         'event_name',
         'organization_name',
         'venue_name',
@@ -24,6 +26,8 @@ class StatisticModel extends Model
     ];
 
     protected $casts = [
+        'event_id' => 'integer',
+        'session_id' => 'integer',
         'date_time' => 'datetime',
         'total_tickets_available' => 'integer',
         'total_amount_sold' => 'decimal:2',

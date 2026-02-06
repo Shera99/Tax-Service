@@ -51,6 +51,8 @@ class ExternalStatisticApiTest extends TestCase
     private function getValidStatisticData(): array
     {
         return [
+            'event_id' => 123,
+            'session_id' => 456,
             'event_name' => 'Концерт группы Test',
             'organization_name' => 'ТОО Тестовая организация',
             'venue_name' => 'Дворец Республики',
@@ -84,6 +86,8 @@ class ExternalStatisticApiTest extends TestCase
                 'message',
                 'data' => [
                     'id',
+                    'event_id',
+                    'session_id',
                     'event_name',
                     'organization_name',
                     'venue_name',
