@@ -225,6 +225,114 @@ curl_close($ch);
 echo $response;
 ```
 
+### Успешный ответ (201 Created)
+
+```json
+{
+    "success": true,
+    "message": "Статистика успешно добавлена",
+    "data": {
+        "id": 1,
+        "event_id": 123,
+        "session_id": 456,
+        "event_name": "Концерт",
+        "organization_name": "ТОО Организатор",
+        "venue_name": "Дворец Республики",
+        "date_time": "2024-06-15 19:00:00",
+        "total_tickets_available": 1000,
+        "total_amount_sold": 150000.00,
+        "total_tickets_sold": 750,
+        "free_tickets_count": 200,
+        "invitation_tickets_count": 50,
+        "refunded_tickets_count": 10,
+        "created_at": "2024-01-15 10:30:00",
+        "updated_at": "2024-01-15 10:30:00"
+    }
+}
+```
+
+### Ошибки авторизации (401 Unauthorized)
+
+**Отсутствует заголовок Authorization:**
+```json
+{
+    "success": false,
+    "message": "Отсутствует заголовок Authorization. Формат: HMAC public_key:signature:timestamp"
+}
+```
+
+**Неверный формат заголовка:**
+```json
+{
+    "success": false,
+    "message": "Неверный формат Authorization. Ожидается: HMAC public_key:signature:timestamp"
+}
+```
+
+**Недействительный API ключ:**
+```json
+{
+    "success": false,
+    "message": "Недействительный API ключ."
+}
+```
+
+**Неверная подпись:**
+```json
+{
+    "success": false,
+    "message": "Неверная подпись запроса."
+}
+```
+
+**Запрос устарел (timestamp отличается более чем на 5 минут):**
+```json
+{
+    "success": false,
+    "message": "Запрос устарел. Timestamp не должен отличаться более чем на 5 минут."
+}
+```
+
+### Ошибки валидации (422 Unprocessable Entity)
+
+```json
+{
+    "message": "Название события обязательно (and 8 more errors)",
+    "errors": {
+        "event_name": ["Название события обязательно"],
+        "organization_name": ["Название организации обязательно"],
+        "date_time": ["Дата и время обязательны"],
+        "total_tickets_available": ["Количество доступных билетов обязательно"],
+        "total_amount_sold": ["Сумма продаж обязательна"],
+        "total_tickets_sold": ["Количество проданных билетов обязательно"],
+        "free_tickets_count": ["Количество непроданных билетов обязательно"],
+        "invitation_tickets_count": ["Количество пригласительных билетов обязательно"],
+        "refunded_tickets_count": ["Количество возвращенных билетов обязательно"]
+    }
+}
+```
+
+**Ошибка формата даты:**
+```json
+{
+    "message": "Дата и время должны быть в формате Y-m-d H:i:s",
+    "errors": {
+        "date_time": ["Дата и время должны быть в формате Y-m-d H:i:s"]
+    }
+}
+```
+
+**Отрицательные значения:**
+```json
+{
+    "message": "Количество проданных билетов не может быть отрицательным",
+    "errors": {
+        "total_tickets_sold": ["Количество проданных билетов не может быть отрицательным"],
+        "total_amount_sold": ["Сумма продаж не может быть отрицательной"]
+    }
+}
+```
+
 ## Структура таблицы Statistics
 
 | Поле | Тип | Описание |
