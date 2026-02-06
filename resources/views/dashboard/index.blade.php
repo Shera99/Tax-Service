@@ -111,17 +111,17 @@
                             <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Дата/Время</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Доступно</th>
+                                Количество заведенных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Продано</th>
+                                Продано билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Свободно</th>
+                                Свободных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Приглас.</th>
+                                Пригласительных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Возврат</th>
+                                Возвращенных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Сумма</th>
+                                Сумма продаж</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
