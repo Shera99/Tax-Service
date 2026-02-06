@@ -113,7 +113,7 @@
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Количество заведенных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
-                                Продано билетов</th>
+                                Проданных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
                                 Свободных билетов</th>
                             <th class="px-4 py-3 text-right text-xs font-semibold text-gray-600 uppercase tracking-wider">
