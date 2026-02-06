@@ -48,7 +48,7 @@
                         <option value="admin" {{ old('role', $user->role) == 'admin' ? 'selected' : '' }}>Администратор
                         </option>
                         <option value="tax_officer" {{ old('role', $user->role) == 'tax_officer' ? 'selected' : '' }}>
-                            Налоговик</option>
+                            Инспектор</option>
                     </select>
                     @if($user->id === auth()->id())
                         <input type="hidden" name="role" value="{{ $user->role }}">

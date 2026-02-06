@@ -65,7 +65,7 @@ class User extends Authenticatable
     {
         return match ($this->role) {
             self::ROLE_ADMIN => 'Администратор',
-            self::ROLE_TAX_OFFICER => 'Налоговик',
+            self::ROLE_TAX_OFFICER => 'Инспектор',
             default => 'Неизвестно',
         };
     }

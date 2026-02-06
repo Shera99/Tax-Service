@@ -33,7 +33,7 @@
                     class="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500">
                     <option value="">Все роли</option>
                     <option value="admin" {{ request('role') == 'admin' ? 'selected' : '' }}>Администратор</option>
-                    <option value="tax_officer" {{ request('role') == 'tax_officer' ? 'selected' : '' }}>Налоговик</option>
+                    <option value="tax_officer" {{ request('role') == 'tax_officer' ? 'selected' : '' }}>Инспектор</option>
                 </select>
 
                 <button type="submit"
@@ -89,7 +89,7 @@
                                     @else
                                         <span
                                             class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-blue-100 text-blue-800">
-                                            <i class="fas fa-user-tie mr-1"></i>Налоговик
+                                            <i class="fas fa-user-tie mr-1"></i>Инспектор
                                         </span>
                                     @endif
                                 </td>

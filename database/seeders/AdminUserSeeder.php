@@ -25,11 +25,11 @@ class AdminUserSeeder extends Seeder
             ]
         );
 
-        // Создание тестового налоговика
+        // Создание тестового инспектора
         User::updateOrCreate(
             ['email' => 'tax@taxservice.local'],
             [
-                'name' => 'Налоговик',
+                'name' => 'Инспектор',
                 'email' => 'tax@taxservice.local',
                 'password' => Hash::make('password'),
                 'role' => User::ROLE_TAX_OFFICER,

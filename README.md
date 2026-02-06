@@ -33,7 +33,7 @@ docker compose exec app php artisan migrate --seed
 - Email: `admin@taxservice.local`
 - Password: `password`
 
-### Налоговик
+### Инспектор
 - Email: `tax@taxservice.local`
 - Password: `password`
 
@@ -42,7 +42,7 @@ docker compose exec app php artisan migrate --seed
 | Роль | Описание | Доступ |
 |------|----------|--------|
 | `admin` | Администратор | Полный доступ: просмотр статистики, управление пользователями |
-| `tax_officer` | Налоговик | Только просмотр статистики |
+| `tax_officer` | Инспектор | Только просмотр статистики |
 
 ## Функционал веб-интерфейса
 
@@ -137,6 +137,8 @@ curl -X POST http://localhost:8080/api/v1/statistics \
   -H "Accept: application/json" \
   -H "Authorization: Bearer YOUR_TOKEN" \
   -d '{
+    "event_id": 123,
+    "session_id": 456,
     "event_name": "Концерт группы XYZ",
     "organization_name": "ТОО Концерт",
     "venue_name": "Дворец Республики",
@@ -190,6 +192,8 @@ $publicKey = 'pub_test_1234567890abcdef12345678';
 $secretKey = 'sec_test_abcdef1234567890abcdef12';
 
 $data = [
+    'event_id' => 123, // опционально
+    'session_id' => 456, // опционально
     'event_name' => 'Концерт',
     'organization_name' => 'ТОО Организатор',
     'venue_name' => 'Дворец Республики', // опционально
@@ -226,6 +230,8 @@ echo $response;
 | Поле | Тип | Описание |
 |------|-----|----------|
 | id | bigint | ID записи |
+| event_id | bigint | ID события во внешней системе (опционально) |
+| session_id | bigint | ID сессии во внешней системе (опционально) |
 | event_name | varchar(255) | Название события |
 | organization_name | varchar(255) | Название организации |
 | venue_name | varchar(255) | Название площадки (опционально) |
