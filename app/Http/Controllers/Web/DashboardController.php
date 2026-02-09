@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exports\StatisticsExport;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Infrastructure\Persistence\Eloquent\Models\StatisticModel;
+use Maatwebsite\Excel\Facades\Excel;
 
 class DashboardController extends Controller
 {
@@ -51,5 +53,12 @@ class DashboardController extends Controller
         $statistics = $query->paginate(20)->withQueryString();
 
         return view('dashboard.index', compact('statistics'));
+    }
+
+    public function export(Request $request)
+    {
+        $filename = 'statistics_' . date('Y-m-d_H-i-s') . '.xlsx';
+
+        return Excel::download(new StatisticsExport($request), $filename);
     }
 }

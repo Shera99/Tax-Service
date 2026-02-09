@@ -92,6 +92,17 @@
                     </button>
                 </div>
             </form>
+
+            <!-- Export button -->
+            <div class="mt-4 pt-4 border-t border-gray-200">
+                <a href="{{ route('dashboard.export', request()->query()) }}"
+                    class="inline-flex items-center px-4 py-2 bg-green-500 hover:bg-green-600 text-white rounded-lg transition-colors">
+                    <i class="fas fa-file-excel mr-2"></i>Экспорт в Excel
+                </a>
+                <span class="ml-3 text-sm text-gray-500">
+                    Будет выгружено {{ $statistics->total() }} записей с учётом текущих фильтров
+                </span>
+            </div>
         </div>
 
         <!-- Table -->

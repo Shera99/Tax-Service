@@ -23,6 +23,7 @@ Route::middleware('auth')->group(function () {
 
     // Dashboard - доступен всем авторизованным
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard/export', [DashboardController::class, 'export'])->name('dashboard.export');
 
     // Управление пользователями и API ключами - только для админа
     Route::middleware('admin')->group(function () {
