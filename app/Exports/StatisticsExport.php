@@ -69,9 +69,6 @@ class StatisticsExport implements FromQuery, WithHeadings, WithMapping, WithStyl
     public function headings(): array
     {
         return [
-            'ID',
-            'ID события',
-            'ID сессии',
             'Название мероприятия',
             'Организация',
             'Площадка',
@@ -89,9 +86,6 @@ class StatisticsExport implements FromQuery, WithHeadings, WithMapping, WithStyl
     public function map($statistic): array
     {
         return [
-            $statistic->id,
-            $statistic->event_id,
-            $statistic->session_id,
             $statistic->event_name,
             $statistic->organization_name,
             $statistic->venue_name ?? '',
